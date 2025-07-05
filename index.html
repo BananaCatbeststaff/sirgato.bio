@@ -549,8 +549,8 @@
             <a href="https://www.roblox.com/pt/users/1467151516/profile" target="_blank" class="social-icon">
                 <img src="https://play-lh.googleusercontent.com/7cIIPlWm4m7AGqVpEsIfyL-HW4cQla4ucXnfalMft1TMIYQIlf2vqgmthlZgbNAQoaQ" alt="Roblox Profile">
             </a>
-            <a href="https://discord.gg/MygNPMBS" target="_blank" class="social-icon">
-                <img src="https://i.ibb.co/kgmhBJZc/Captura-de-tela-2025-07-04-205127.png" alt="Discord Server">
+            <a href="https://discord.gg/chuoihub" target="_blank" class="social-icon">
+                <img src="https://cdn.discordapp.com/icons/880044612343955457/a_9c5ac13034e706a3f8e8062bd6950224.gif?size=4096" alt="Discord Server">
             </a>
         </div>
     </div>
@@ -614,311 +614,274 @@
     +--------------------------+
 </div>
     <script>
-            document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        // Configurações personalizáveis
+        const config = {
+            name: "SirGato",
+            description: '"Im a Fucking Full Stack (skidder) Dev"',
+            avatar: "https://r2.guns.lol/e9bb19ca-0392-4faa-94c8-d09ebe296383.webp",
+            background: "https://r2.guns.lol/0f58a436-8e12-4de6-a0e1-fef1f8ef303a.webp",
+            links: {
+                discord: "https://discordapp.com/users/1366731772531839026",
+                roblox: "https://www.roblox.com/pt/users/1467151516/profile",
+                server: "https://discord.gg/MygNPMBS"
+            },
+            icons: {
+                discord: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNhzOu_oz3Fmu3LS6xGhF-AHVMdbQztrXqYo1fLv-LZpfbYKhjNwSuq4vAWX2dHdNhZAA&usqp=CAU",
+                roblox: "https://play-lh.googleusercontent.com/7cIIPlWm4m7AGqVpEsIfyL-HW4cQla4ucXnfalMft1TMIYQIlf2vqgmthlZgbNAQoaQ",
+                server: "https://i.ibb.co/kgmhBJZc/Captura-de-tela-2025-07-04-205127.png"
+            }
+        };
+
+        // Audio Player Setup
         const audioPlayer = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const totalTimeDisplay = document.getElementById('totalTime');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const avatarContainer = document.querySelector('.avatar-container');
+
+        let isPlaying = false;
+        let isMuted = false;
+        let previousVolume = 0.5;
+
+        function initAudioPlayer() {
+            audioPlayer.volume = 0.5;
+            audioPlayer.muted = true;
+
+            audioPlayer.play().then(() => {
+                audioPlayer.muted = false;
+                isPlaying = true;
+                playBtn.innerHTML = '⏸';
+                avatarContainer.classList.add('playing');
+                avatarContainer.classList.remove('paused');
+                console.log('Autoplay funcionando.');
+            }).catch(() => {
+                console.log('Autoplay bloqueado. Esperando interação.');
+            });
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
+            }
+        }
         const clickOverlay = document.getElementById('clickToPlay');
 
-        // Tentar tocar automaticamente
-        audioPlayer.muted = true;
-        audioPlayer.play().then(() => {
-            // Sucesso: já está tocando
-            audioPlayer.muted = false;
-            console.log('Autoplay funcionou.');
-        }).catch(() => {
-            // Se falhar, mostrar a tela de clique
-            clickOverlay.style.display = 'flex';
-            console.log('Autoplay bloqueado, aguardando interação...');
-        });
-
-        // Quando o usuário clicar, forçar o play
-        clickOverlay.addEventListener('click', function () {
-            audioPlayer.muted = false;
-            audioPlayer.play().then(() => {
-                clickOverlay.style.display = 'none';
-                console.log('Áudio iniciado após interação.');
-            }).catch(err => {
-                console.error('Erro ao iniciar áudio:', err);
-            });
-        });
-    });
-        showButton.addEventListener('mouseleave', function() {
-            this.style.transform = 'translate(-50%, -50%) scale(1)';
-            this.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
-        });
-document.addEventListener('DOMContentLoaded', function () {
-    const audioPlayer = document.getElementById('audioPlayer');
-    const clickOverlay = document.getElementById('clickToPlay');
-
-    // Tentar tocar automaticamente
+function initAudioPlayer() {
+    audioPlayer.volume = 0.5;
     audioPlayer.muted = true;
+
     audioPlayer.play().then(() => {
         audioPlayer.muted = false;
-        console.log('Autoplay funcionou.');
+        isPlaying = true;
+        playBtn.innerHTML = '⏸';
+        avatarContainer.classList.add('playing');
+        avatarContainer.classList.remove('paused');
+        console.log('Autoplay funcionando.');
     }).catch(() => {
+        // Se o autoplay falhar, mostre o overlay para clique manual
         clickOverlay.style.display = 'flex';
-        console.log('Autoplay bloqueado, aguardando interação...');
+        console.log('Autoplay bloqueado. Esperando interação.');
     });
+}
 
-    clickOverlay.addEventListener('click', function () {
-        audioPlayer.muted = false;
-        audioPlayer.play().then(() => {
-            clickOverlay.style.display = 'none';
-            console.log('Áudio iniciado após interação.');
-        }).catch(err => {
-            console.error('Erro ao iniciar áudio:', err);
-        });
+// Quando o usuário clicar no overlay
+clickOverlay.addEventListener('click', function () {
+    audioPlayer.muted = false;
+    audioPlayer.play().then(() => {
+        clickOverlay.style.display = 'none';
+        isPlaying = true;
+        playBtn.innerHTML = '⏸';
+        avatarContainer.classList.add('playing');
+        avatarContainer.classList.remove('paused');
+        console.log('Áudio iniciado após interação.');
+    }).catch(err => {
+        console.error('Erro ao iniciar áudio:', err);
     });
+});
 
-    // --- CONTINUAÇÃO DO SCRIPT ---
-
-    // Variáveis dos controles
-    const playBtn = document.getElementById('playBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const muteBtn = document.getElementById('muteBtn');
-    const progressBar = document.getElementById('progressBar');
-    const progressFill = document.getElementById('progressFill');
-    const currentTimeDisplay = document.getElementById('currentTime');
-    const totalTimeDisplay = document.getElementById('totalTime');
-    const volumeSlider = document.getElementById('volumeSlider');
-    const avatarContainer = document.querySelector('.avatar-container');
-
-    let isPlaying = false;
-    let isMuted = false;
-    let previousVolume = 0.5;
-
-    // Inicializa volume
-    audioPlayer.volume = previousVolume;
-
-    // Funções de controle
-    function togglePlay() {
-        if (isPlaying) {
-            pauseAudio();
-        } else {
-            playAudio();
+        function playAudio() {
+            audioPlayer.play().then(() => {
+                isPlaying = true;
+                playBtn.innerHTML = '⏸';
+                avatarContainer.classList.add('playing');
+                avatarContainer.classList.remove('paused');
+            }).catch(error => {
+                console.log('Erro ao reproduzir áudio:', error);
+            });
         }
-    }
 
-    function playAudio() {
-        audioPlayer.play().then(() => {
-            isPlaying = true;
-            playBtn.innerHTML = '⏸';
-            avatarContainer.classList.add('playing');
-            avatarContainer.classList.remove('paused');
-        }).catch(error => {
-            console.log('Erro ao reproduzir áudio:', error);
-        });
-    }
-
-    function pauseAudio() {
-        audioPlayer.pause();
-        isPlaying = false;
-        playBtn.innerHTML = '▶';
-        avatarContainer.classList.add('paused');
-        avatarContainer.classList.remove('playing');
-    }
-
-    function toggleMute() {
-        if (isMuted) {
-            audioPlayer.volume = previousVolume;
-            volumeSlider.value = previousVolume * 100;
-            muteBtn.innerHTML = '🔊';
-            isMuted = false;
-        } else {
-            previousVolume = audioPlayer.volume;
-            audioPlayer.volume = 0;
-            volumeSlider.value = 0;
-            muteBtn.innerHTML = '🔇';
-            isMuted = true;
+        function pauseAudio() {
+            audioPlayer.pause();
+            isPlaying = false;
+            playBtn.innerHTML = '▶';
+            avatarContainer.classList.add('paused');
+            avatarContainer.classList.remove('playing');
         }
-    }
 
-    function updateVolume() {
-        const volume = volumeSlider.value / 100;
-        audioPlayer.volume = volume;
-        if (volume === 0) {
-            muteBtn.innerHTML = '🔇';
-            isMuted = true;
-        } else {
-            muteBtn.innerHTML = '🔊';
-            isMuted = false;
-            previousVolume = volume;
+        function toggleMute() {
+            if (isMuted) {
+                audioPlayer.volume = previousVolume;
+                volumeSlider.value = previousVolume * 100;
+                muteBtn.innerHTML = '🔊';
+                isMuted = false;
+            } else {
+                previousVolume = audioPlayer.volume;
+                audioPlayer.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.innerHTML = '🔇';
+                isMuted = true;
+            }
         }
-    }
 
-    function updateProgress() {
-        if (audioPlayer.duration) {
+        function updateVolume() {
+            const volume = volumeSlider.value / 100;
+            audioPlayer.volume = volume;
+
+            if (volume === 0) {
+                muteBtn.innerHTML = '🔇';
+                isMuted = true;
+            } else {
+                muteBtn.innerHTML = '🔊';
+                isMuted = false;
+                previousVolume = volume;
+            }
+        }
+
+        function updateProgress() {
             const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
             progressFill.style.width = progress + '%';
+
             currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
             totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
         }
-    }
 
-    function setProgress(e) {
-        const width = progressBar.clientWidth;
-        const clickX = e.offsetX;
-        if (audioPlayer.duration) {
-            audioPlayer.currentTime = (clickX / width) * audioPlayer.duration;
+        function setProgress(e) {
+            const width = progressBar.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+
+            audioPlayer.currentTime = (clickX / width) * duration;
         }
-    }
 
-    function formatTime(time) {
-        if (isNaN(time)) return '0:00';
-        const minutes = Math.floor(time / 60);
-        const seconds = Math.floor(time % 60);
-        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    }
+        function formatTime(time) {
+            if (isNaN(time)) return '0:00';
 
-    // Event listeners dos controles
-    playBtn.addEventListener('click', togglePlay);
-    muteBtn.addEventListener('click', toggleMute);
-    volumeSlider.addEventListener('input', updateVolume);
-    progressBar.addEventListener('click', setProgress);
+            const minutes = Math.floor(time / 60);
+            const seconds = Math.floor(time % 60);
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
 
-    audioPlayer.addEventListener('timeupdate', updateProgress);
+        // Event listeners
+        playBtn.addEventListener('click', togglePlay);
+        muteBtn.addEventListener('click', toggleMute);
+        volumeSlider.addEventListener('input', updateVolume);
+        progressBar.addEventListener('click', setProgress);
 
-    audioPlayer.addEventListener('loadedmetadata', () => {
-        totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
-    });
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+        });
 
-    audioPlayer.addEventListener('ended', () => {
-        isPlaying = false;
-        playBtn.innerHTML = '▶';
-        avatarContainer.classList.add('paused');
-        avatarContainer.classList.remove('playing');
-        audioPlayer.currentTime = 0;
-    });
+        audioPlayer.addEventListener('ended', () => {
+            isPlaying = false;
+            playBtn.innerHTML = '▶';
+            avatarContainer.classList.add('paused');
+            avatarContainer.classList.remove('playing');
+            audioPlayer.currentTime = 0;
+        });
 
-    // Função typewriter com ciclo
-    function typeWriterCycle(text, element, writeSpeed = 200, eraseSpeed = 200, waitTime = 7500) {
-        let isWriting = true;
-        let currentText = '';
-        let index = 0;
+        // Typewriter Function
+        function typeWriterCycle(text, element, writeSpeed = 200, eraseSpeed = 200, waitTime = 7500) {
+            let isWriting = true;
+            let currentText = '';
+            let index = 0;
 
-        function cycle() {
-            if (isWriting) {
-                if (index < text.length) {
-                    currentText += text.charAt(index);
-                    element.innerHTML = currentText;
-                    index++;
-                    setTimeout(cycle, writeSpeed);
+            function cycle() {
+                if (isWriting) {
+                    if (index < text.length) {
+                        currentText += text.charAt(index);
+                        element.innerHTML = currentText;
+                        index++;
+                        setTimeout(cycle, writeSpeed);
+                    } else {
+                        setTimeout(() => {
+                            isWriting = false;
+                            index = currentText.length;
+                            cycle();
+                        }, waitTime);
+                    }
                 } else {
-                    setTimeout(() => {
-                        isWriting = false;
-                        index = currentText.length;
-                        cycle();
-                    }, waitTime);
-                }
-            } else {
-                if (index > 0) {
-                    currentText = currentText.slice(0, -1);
-                    element.innerHTML = currentText;
-                    index--;
-                    setTimeout(cycle, eraseSpeed);
-                } else {
-                    isWriting = true;
-                    index = 0;
-                    setTimeout(cycle, 500);
+                    if (index > 0) {
+                        currentText = currentText.slice(0, -1);
+                        element.innerHTML = currentText;
+                        index--;
+                        setTimeout(cycle, eraseSpeed);
+                    } else {
+                        isWriting = true;
+                        index = 0;
+                        setTimeout(cycle, 500);
+                    }
                 }
             }
+
+            cycle();
         }
 
-        cycle();
-    }
+        // Inicialização
+        initAudioPlayer();
 
-    // Inicializar animação typewriter e áudio
-    const config = {
-        name: "SirGato",
-        description: '"Im a Fucking Full Stack (skidder) Dev"',
-        avatar: "https://r2.guns.lol/e9bb19ca-0392-4faa-94c8-d09ebe296383.webp",
-        background: "https://r2.guns.lol/0f58a436-8e12-4de6-a0e1-fef1f8ef303a.webp",
-        links: {
-            discord: "https://discordapp.com/users/1366731772531839026",
-            roblox: "https://www.roblox.com/pt/users/1467151516/profile",
-            server: "https://discord.gg/MygNPMBS"
-        },
-        icons: {
-            discord: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNhzOu_oz3Fmu3LS6xGhF-AHVMdbQztrXqYo1fLv-LZpfbYKhjNwSuq4vAWX2dHdNhZAA&usqp=CAU",
-            roblox: "https://play-lh.googleusercontent.com/7cIIPlWm4m7AGqVpEsIfyL-HW4cQla4ucXnfalMft1TMIYQIlf2vqgmthlZgbNAQoaQ",
-            server: "https://i.ibb.co/kgmhBJZc/Captura-de-tela-2025-07-04-205127.png"
-        }
-    };
-
-    setTimeout(() => {
-        const typewriterElement = document.getElementById('typewriter-text');
-        const descriptionElement = document.getElementById('description-typewriter');
-
-        typeWriterCycle(config.name, typewriterElement, 200, 125, 7000);
-        typeWriterCycle(config.description, descriptionElement, 50, 25, 7500);
-    }, 2000);
-
-    // Pulsar avatar
-    const avatar = document.querySelector('.avatar');
-    setInterval(() => {
-        avatar.classList.add('pulse');
-        setTimeout(() => avatar.classList.remove('pulse'), 2000);
-    }, 8000);
-
-    // Parallax background
-    const container = document.querySelector('.container');
-    document.addEventListener('mousemove', function(e) {
-        const x = (e.clientX - window.innerWidth / 2) / 50;
-        const y = (e.clientY - window.innerHeight / 2) / 50;
-        if (container) {
-            container.style.transform = `translate(${x}px, ${y}px)`;
-        }
-    });
-
-    // Atualizar configuração (exemplo)
-    function updateConfig(newConfig) {
-        Object.assign(config, newConfig);
-        if (newConfig.avatar) {
-            const avatarImg = document.querySelector('.avatar');
-            if (avatarImg) avatarImg.src = newConfig.avatar;
-        }
-        if (newConfig.background) {
-            document.body.style.backgroundImage = `url('${newConfig.background}')`;
-        }
-        if (newConfig.name) {
+        setTimeout(() => {
             const typewriterElement = document.getElementById('typewriter-text');
-            if (typewriterElement) typeWriterCycle(newConfig.name, typewriterElement, 200, 200, 7500);
-        }
-        if (newConfig.description) {
             const descriptionElement = document.getElementById('description-typewriter');
-            if (descriptionElement) typeWriterCycle(newConfig.description, descriptionElement, 100, 100, 7500);
-        }
-        if (newConfig.links) {
-            const socialLinks = document.querySelectorAll('.social-icon');
-            if (newConfig.links.discord && socialLinks[0]) socialLinks[0].href = newConfig.links.discord;
-            if (newConfig.links.roblox && socialLinks[1]) socialLinks[1].href = newConfig.links.roblox;
-            if (newConfig.links.server && socialLinks[2]) socialLinks[2].href = newConfig.links.server;
-        }
-        if (newConfig.icons) {
-            const socialIcons = document.querySelectorAll('.social-icon img');
-            if (newConfig.icons.discord && socialIcons[0]) socialIcons[0].src = newConfig.icons.discord;
-            if (newConfig.icons.roblox && socialIcons[1]) socialIcons[1].src = newConfig.icons.roblox;
-            if (newConfig.icons.server && socialIcons[2]) socialIcons[2].src = newConfig.icons.server;
-        }
-    }
 
-    // Efeitos de entrada escalonados ao carregar a página
-    window.addEventListener('load', function() {
-        const elements = ['.avatar', '.name', '.description', '.social-links', '.music-player'];
-        elements.forEach((selector, index) => {
-            const element = document.querySelector(selector);
-            if (element) {
-                element.style.opacity = 0;
-                element.style.transform = 'translateY(30px)';
-                setTimeout(() => {
-                    element.style.transition = 'all 0.6s ease';
-                    element.style.opacity = 1;
-                    element.style.transform = 'translateY(0)';
-                }, index * 300);
-            }
+            typeWriterCycle(config.name, typewriterElement, 200, 125, 7000);
+            typeWriterCycle(config.description, descriptionElement, 50, 25, 7500);
+        }, 2000);
+
+        // Efeito pulse no avatar
+        const avatar = document.querySelector('.avatar');
+        setInterval(() => {
+            avatar.classList.add('pulse');
+            setTimeout(() => {
+                avatar.classList.remove('pulse');
+            }, 2000);
+        }, 8000);
+
+        // Parallax no fundo
+        document.addEventListener('mousemove', function (e) {
+            const container = document.querySelector('.container');
+            const x = (e.clientX - window.innerWidth / 2) / 50;
+            const y = (e.clientY - window.innerHeight / 2) / 50;
+
+            container.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        // Efeitos de entrada
+        window.addEventListener('load', function () {
+            const elements = ['.avatar', '.name', '.description', '.social-links', '.music-player'];
+            elements.forEach((selector, index) => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.style.opacity = 0;
+                    element.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        element.style.transition = 'all 0.6s ease';
+                        element.style.opacity = 1;
+                        element.style.transform = 'translateY(0)';
+                    }, index * 300);
+                }
+            });
         });
     });
-});
 </script>
 </body>
 </html>
