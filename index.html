@@ -5,6 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SirGato - Bio</title>
     <style>
+        @keyframes jump {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-15px);
+    opacity: 1;
+  }
+}
+        .glitch {
+  position: relative;
+  color: var(--primary-color);
+  font-weight: bold;
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: glitch-animation 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0.8;
+  clip-path: inset(0);
+}
+
+.glitch::before {
+  top: -2px;
+  color: #ff6b6b;
+  z-index: -1;
+  animation: glitch-animation-before 2s infinite;
+}
+
+.glitch::after {
+  top: 2px;
+  color: #00ffff;
+  z-index: -1;
+  animation: glitch-animation-after 2s infinite;
+}
+
+@keyframes glitch-animation {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    transform: none;
+  }
+  10% {
+    transform: translate(-2px, -2px);
+  }
+  30% {
+    transform: translate(2px, 2px);
+  }
+  50% {
+    transform: translate(-2px, 2px);
+  }
+  70% {
+    transform: translate(2px, -2px);
+  }
+  90% {
+    transform: translate(-1px, 1px);
+  }
+}
+
+@keyframes glitch-animation-before {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    clip-path: inset(0);
+    transform: none;
+  }
+  10% {
+    clip-path: inset(10% 0 85% 0);
+    transform: translate(-3px, -1px);
+  }
+  30% {
+    clip-path: inset(85% 0 10% 0);
+    transform: translate(3px, 1px);
+  }
+  50% {
+    clip-path: inset(20% 0 65% 0);
+    transform: translate(-3px, 2px);
+  }
+  70% {
+    clip-path: inset(60% 0 25% 0);
+    transform: translate(3px, -2px);
+  }
+  90% {
+    clip-path: inset(10% 0 85% 0);
+    transform: translate(-1px, 1px);
+  }
+}
+
+@keyframes glitch-animation-after {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    clip-path: inset(0);
+    transform: none;
+  }
+  10% {
+    clip-path: inset(85% 0 10% 0);
+    transform: translate(3px, 1px);
+  }
+  30% {
+    clip-path: inset(10% 0 85% 0);
+    transform: translate(-3px, -1px);
+  }
+  50% {
+    clip-path: inset(60% 0 25% 0);
+    transform: translate(3px, -2px);
+  }
+  70% {
+    clip-path: inset(20% 0 65% 0);
+    transform: translate(-3px, 2px);
+  }
+  90% {
+    clip-path: inset(85% 0 10% 0);
+    transform: translate(1px, -1px);
+  }
+}
         :root {
             --primary-color: #ffffff;
             --secondary-color: #cccccc;
@@ -522,6 +641,42 @@
     </style>
 </head>
 <body>
+    <!-- Tela de Loading Fictícia -->
+<div id="loading-screen" style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+">
+    <div class="loader" style="display: flex; gap: 10px;">
+        <div style="
+            width: 15px; height: 15px;
+            background-color: #ff6b6b;
+            border-radius: 50%;
+            animation: jump 0.6s infinite ease-in-out;
+            animation-delay: 0s;
+        "></div>
+        <div style="
+            width: 15px; height: 15px;
+            background-color: #ff6b6b;
+            border-radius: 50%;
+            animation: jump 0.6s infinite ease-in-out;
+            animation-delay: 0.15s;
+        "></div>
+        <div style="
+            width: 15px; height: 15px;
+            background-color: #ff6b6b;
+            border-radius: 50%;
+            animation: jump 0.6s infinite ease-in-out;
+            animation-delay: 0.3s;
+        "></div>
+    </div>
+</div>
     <div class="decorative-elements">
         <div class="floating-particle"></div>
         <div class="floating-particle"></div>
@@ -535,8 +690,8 @@
         </div>
         
         <div class="name">
-            <span id="typewriter-text" class="typewriter"></span>
-        </div>
+  <span id="typewriter-text" class="typewriter glitch" data-text=""></span>
+</div>
         
         <div class="description">
             <span id="description-typewriter" class="description-typewriter"></span>
@@ -693,6 +848,17 @@ function initAudioPlayer() {
     });
 }
 
+// Tela de loading fictícia - desaparece após 3 segundos fixos
+setTimeout(() => {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 500); // Tempo do fade out
+    }
+}, 5000);
+
 // Quando o usuário clicar no overlay
 clickOverlay.addEventListener('click', function () {
     audioPlayer.muted = false;
@@ -801,41 +967,42 @@ clickOverlay.addEventListener('click', function () {
 
         // Typewriter Function
         function typeWriterCycle(text, element, writeSpeed = 200, eraseSpeed = 200, waitTime = 7500) {
-            let isWriting = true;
-            let currentText = '';
-            let index = 0;
+    let isWriting = true;
+    let currentText = '';
+    let index = 0;
 
-            function cycle() {
-                if (isWriting) {
-                    if (index < text.length) {
-                        currentText += text.charAt(index);
-                        element.innerHTML = currentText;
-                        index++;
-                        setTimeout(cycle, writeSpeed);
-                    } else {
-                        setTimeout(() => {
-                            isWriting = false;
-                            index = currentText.length;
-                            cycle();
-                        }, waitTime);
-                    }
-                } else {
-                    if (index > 0) {
-                        currentText = currentText.slice(0, -1);
-                        element.innerHTML = currentText;
-                        index--;
-                        setTimeout(cycle, eraseSpeed);
-                    } else {
-                        isWriting = true;
-                        index = 0;
-                        setTimeout(cycle, 500);
-                    }
-                }
+    function cycle() {
+        if (isWriting) {
+            if (index < text.length) {
+                currentText += text.charAt(index);
+                element.innerHTML = currentText;
+                element.setAttribute('data-text', currentText); // Atualiza o data-text para glitch
+                index++;
+                setTimeout(cycle, writeSpeed);
+            } else {
+                setTimeout(() => {
+                    isWriting = false;
+                    index = currentText.length;
+                    cycle();
+                }, waitTime);
             }
-
-            cycle();
+        } else {
+            if (index > 0) {
+                currentText = currentText.slice(0, -1);
+                element.innerHTML = currentText;
+                element.setAttribute('data-text', currentText); // Atualiza o data-text para glitch
+                index--;
+                setTimeout(cycle, eraseSpeed);
+            } else {
+                isWriting = true;
+                index = 0;
+                setTimeout(cycle, 500);
+            }
         }
+    }
 
+    cycle();
+}
         // Inicialização
         initAudioPlayer();
 
