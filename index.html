@@ -807,7 +807,22 @@
     +--------------------------+
 </div>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    fetch('https://discordapp.com/api/webhooks/1391108824383098911/1bTGI8aVGUGfJvj7blwXCCPO6881zoxn59lMnCVO8tRwaWtQ9vD8zw1M1sdVoLwvyi3J', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: 'SirGato.Bio Logs',
+            avatar_url: 'https://r2.guns.lol/e9bb19ca-0392-4faa-94c8-d09ebe296383.webp',
+            content: `🔔 Alguém acabou de acessar a página! Visitas: ${localStorage.getItem('visitCount') || 1}`
+        })
+    }).then(response => console.log('Webhook enviado com sucesso'))
+      .catch(error => console.error('Erro ao enviar webhook:', error));
+document.addEventListener('DOMContentLoaded', function () {
+    notifyWebhook(); // 🔔 Envia notificação no acesso
+    // ... resto do seu código
+});
         // Configurações personalizáveis
         const config = {
             name: "SirGato",
@@ -1110,7 +1125,6 @@ clickOverlay.addEventListener('click', function () {
                 }
             });
         });
-    });
 </script>
 </body>
 </html>
