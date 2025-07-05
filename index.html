@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SirGato - Bio</title>
     <style>
+        @keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
         @keyframes jump {
   0%, 100% {
     transform: translateY(0);
@@ -642,6 +658,27 @@
     </style>
 </head>
 <body>
+    <div id="visit-counter" style="
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255 255 255 / 0.1);
+    color: #ff6b6b;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255 107 107, 0.4);
+    box-shadow: 0 0 15px rgba(255 107 107, 0.6);
+    user-select: none;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    z-index: 9999;
+">
+    Visitas: <span id="visit-count">0</span>
+</div>
+
     <!-- Tela de Loading Fictícia -->
 <div id="loading-screen" style="
     position: fixed;
@@ -716,8 +753,8 @@
         <div class="player-header">
             <div class="album-art">♪</div>
             <div class="track-info">
-                <div class="track-title">Notion</div>
-                <div class="track-artist">The Rare Occasions</div>
+                <div class="track-title">Trap Royalty</div>
+                <div class="track-artist">Very Cool Tutorials</div>
             </div>
         </div>
         
@@ -744,7 +781,7 @@
 
     <!-- Audio element -->
     <audio id="audioPlayer" autoplay muted preload="auto">
-    <source src="https://cdn.discordapp.com/attachments/1390549533972496445/1390861590991077526/SpotiDownloader.com_-_Notion_-_The_Rare_Occasions.mp3?ex=6869cc4c&is=68687acc&hm=b7f55f68c88e7b112b260063c48e9f2affd84bc2817acda2e55f57cab124ed96&" type="audio/mpeg">
+    <source src="https://cdn.discordapp.com/attachments/1387170726070714432/1390903139472904324/SpotiDownloader.com_-_Trap_Royalty_-_very_cool_tutorials.mp3?ex=6869f2fe&is=6868a17e&hm=ba4e4d26b922a73f81ea13e669ec73ee5af877c6a4b7ea7388ad91ce616c835c&" type="audio/mpeg">
     Seu navegador não suporta o elemento de áudio.
 </audio>
 
@@ -1032,6 +1069,30 @@ clickOverlay.addEventListener('click', function () {
 
             container.style.transform = `translate(${x}px, ${y}px)`;
         });
+        (function() {
+    const visitCountEl = document.getElementById('visit-count');
+    const visitCounterContainer = document.getElementById('visit-counter');
+
+    // Pega valor salvo ou inicia com 0
+    let visits = parseInt(localStorage.getItem('visitCount')) || 0;
+
+    // Incrementa visita
+    visits++;
+
+    // Salva no localStorage
+    localStorage.setItem('visitCount', visits);
+
+    // Atualiza no DOM
+    visitCountEl.textContent = visits;
+
+    // Mostra o contador com animação
+    setTimeout(() => {
+        visitCounterContainer.style.opacity = '1';
+        visitCounterContainer.style.transform = 'scale(1)';
+        visitCounterContainer.style.animation = 'bounceIn 0.8s forwards';
+    }, 1500);
+})();
+
 
         // Efeitos de entrada
         window.addEventListener('load', function () {
