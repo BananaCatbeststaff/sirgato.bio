@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SirGato - Bio</title>
+    <style>
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #cccccc;
+            --accent-color: #ff6b6b;
+            --background-overlay: rgba(0, 0, 0, 0.6);
+            --card-background: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.2);
+            --glow-color: rgba(255, 107, 107, 0.5);
+            --font-main: 'Arial', sans-serif;
+            --font-mono: 'Courier New', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            height: 100vh;
+            overflow: hidden;
+            background: url('https://r2.guns.lol/0f58a436-8e12-4de6-a0e1-fef1f8ef303a.webp') center/cover no-repeat fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-overlay);
+            backdrop-filter: blur(1px);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            padding: 40px;
+            background: var(--card-background);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .avatar-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-color);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-family: var(--font-mono);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--accent-color);
+            white-space: nowrap;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: var(--accent-color); }
+            51%, 100% { border-color: transparent; }
+        }
+
+        .description {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            font-style: italic;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .description-typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--secondary-color);
+            white-space: nowrap;
+            animation: blinkDescription 1s infinite;
+        }
+
+        @keyframes blinkDescription {
+            0%, 50% { border-color: var(--secondary-color); }
+            51%, 100% { border-color: transparent; }
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--card-background);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(20px);
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+            background: var(--accent-color);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        .social-icon img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover img {
+            transform: scale(1.1);
+        }
+
+        .decorative-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .floating-particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-particle:nth-child(2) { top: 60%; right: 15%; animation-delay: 2s; }
+        .floating-particle:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 30px 20px;
+            }
+            
+            .name {
+                font-size: 2rem;
+                min-height: 50px;
+            }
+            
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .description {
+                font-size: 1rem;
+                min-height: 25px;
+            }
+            
+            .social-links {
+                gap: 15px;
+                margin-top: 20px;
+            }
+            
+            .social-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .social-icon img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 15px;
+            }
+            
+            .name {
+                font-size: 1.8rem;
+                min-height: 45px;
+            }
+            
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .description {
+                font-size: 0.9rem;
+                min-height: 22px;
+            }
+            
+            .social-links {
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            .social-icon {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .social-icon img {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        /* Animações adicionais */
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="decorative-elements">
+        <div class="floating-particle"></div>
+        <div class="floating-particle"></div>
+        <div class="floating-particle"></div>
+    </div>
+
+    <div class="container">
+        <div class="avatar-container">
+            <img src="https://r2.guns.lol/e9bb19ca-0392-4faa-94c8-d09ebe296383.webp" alt="SirGato Avatar" class="avatar">
+        </div>
+        
+        <div class="name">
+            <span id="typewriter-text" class="typewriter"></span>
+        </div>
+        
+        <div class="description">
+            <span id="description-typewriter" class="description-typewriter"></span>
+        </div>
+        
+        <div class="social-links">
+            <a href="https://discordapp.com/users/1366731772531839026" target="_blank" class="social-icon">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNhzOu_oz3Fmu3LS6xGhF-AHVMdbQztrXqYo1fLv-LZpfbYKhjNwSuq4vAWX2dHdNhZAA&usqp=CAU" alt="Discord Profile">
+            </a>
+            <a href="https://www.roblox.com/pt/users/1467151516/profile" target="_blank" class="social-icon">
+                <img src="https://play-lh.googleusercontent.com/7cIIPlWm4m7AGqVpEsIfyL-HW4cQla4ucXnfalMft1TMIYQIlf2vqgmthlZgbNAQoaQ" alt="Roblox Profile">
+            </a>
+            <a href="https://discord.gg/MygNPMBS" target="_blank" class="social-icon">
+                <img src="https://i.ibb.co/kgmhBJZc/Captura-de-tela-2025-07-04-205127.png" alt="Discord Server">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Configurações personalizáveis
+        const config = {
+            name: "SirGato",
+            description: '"Im a Fucking Full Stack (skidder) Dev"',
+            avatar: "https://r2.guns.lol/e9bb19ca-0392-4faa-94c8-d09ebe296383.webp",
+            background: "https://r2.guns.lol/0f58a436-8e12-4de6-a0e1-fef1f8ef303a.webp",
+            links: {
+                discord: "https://discordapp.com/users/1366731772531839026",
+                roblox: "https://www.roblox.com/pt/users/1467151516/profile",
+                server: "https://discord.gg/MygNPMBS"
+            },
+            icons: {
+                discord: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNhzOu_oz3Fmu3LS6xGhF-AHVMdbQztrXqYo1fLv-LZpfbYKhjNwSuq4vAWX2dHdNhZAA&usqp=CAU",
+                roblox: "https://play-lh.googleusercontent.com/7cIIPlWm4m7AGqVpEsIfyL-HW4cQla4ucXnfalMft1TMIYQIlf2vqgmthlZgbNAQoaQ",
+                server: "https://i.ibb.co/kgmhBJZc/Captura-de-tela-2025-07-04-205127.png"
+            }
+        };
+
+        // Função para efeito typewriter com ciclo completo
+        function typeWriterCycle(text, element, writeSpeed = 200, eraseSpeed = 200, waitTime = 7500) {
+            let isWriting = true;
+            let currentText = '';
+            let index = 0;
+            
+            function cycle() {
+                if (isWriting) {
+                    // Escrevendo
+                    if (index < text.length) {
+                        currentText += text.charAt(index);
+                        element.innerHTML = currentText;
+                        index++;
+                        setTimeout(cycle, writeSpeed);
+                    } else {
+                        // Terminou de escrever, aguarda o tempo especificado
+                        setTimeout(() => {
+                            isWriting = false;
+                            index = currentText.length;
+                            cycle();
+                        }, waitTime);
+                    }
+                } else {
+                    // Apagando
+                    if (index > 0) {
+                        currentText = currentText.slice(0, -1);
+                        element.innerHTML = currentText;
+                        index--;
+                        setTimeout(cycle, eraseSpeed);
+                    } else {
+                        // Terminou de apagar, reinicia o ciclo
+                        isWriting = true;
+                        index = 0;
+                        setTimeout(cycle, 500); // Pequena pausa antes de começar a escrever novamente
+                    }
+                }
+            }
+            
+            cycle();
+        }
+
+        // Inicializar animação typewriter
+        document.addEventListener('DOMContentLoaded', function() {
+            const typewriterElement = document.getElementById('typewriter-text');
+            const descriptionElement = document.getElementById('description-typewriter');
+            
+            // Delay de 2 segundos para ambos começarem
+            setTimeout(() => {
+                // Ambos começam ao mesmo tempo
+                typeWriterCycle(config.name, typewriterElement, 200, 125, 7000);
+                typeWriterCycle(config.description, descriptionElement, 50, 25, 7500); // 2x mais rápido
+            }, 2000);
+
+            // Adicionar efeito pulse no avatar periodicamente
+            const avatar = document.querySelector('.avatar');
+            setInterval(() => {
+                avatar.classList.add('pulse');
+                setTimeout(() => {
+                    avatar.classList.remove('pulse');
+                }, 2000);
+            }, 8000);
+        });
+
+        // Efeito parallax sutil no background
+        document.addEventListener('mousemove', function(e) {
+            const container = document.querySelector('.container');
+            const x = (e.clientX - window.innerWidth / 2) / 50;
+            const y = (e.clientY - window.innerHeight / 2) / 50;
+            
+            container.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        // Função para personalizar facilmente
+        function updateConfig(newConfig) {
+            Object.assign(config, newConfig);
+            
+            // Atualizar elementos visuais
+            if (newConfig.avatar) {
+                document.querySelector('.avatar').src = newConfig.avatar;
+            }
+            
+            if (newConfig.background) {
+                document.body.style.backgroundImage = `url('${newConfig.background}')`;
+            }
+            
+            if (newConfig.name) {
+                const typewriterElement = document.getElementById('typewriter-text');
+                typeWriterCycle(newConfig.name, typewriterElement, 200, 200, 7500);
+            }
+            
+            if (newConfig.description) {
+                const descriptionElement = document.getElementById('description-typewriter');
+                typeWriterCycle(newConfig.description, descriptionElement, 100, 100, 7500);
+            }
+            
+            if (newConfig.links) {
+                // Atualizar links se fornecidos
+                const socialLinks = document.querySelectorAll('.social-icon');
+                if (newConfig.links.discord && socialLinks[0]) {
+                    socialLinks[0].href = newConfig.links.discord;
+                }
+                if (newConfig.links.roblox && socialLinks[1]) {
+                    socialLinks[1].href = newConfig.links.roblox;
+                }
+                if (newConfig.links.server && socialLinks[2]) {
+                    socialLinks[2].href = newConfig.links.server;
+                }
+            }
+            
+            if (newConfig.icons) {
+                // Atualizar ícones se fornecidos
+                const socialIcons = document.querySelectorAll('.social-icon img');
+                if (newConfig.icons.discord && socialIcons[0]) {
+                    socialIcons[0].src = newConfig.icons.discord;
+                }
+                if (newConfig.icons.roblox && socialIcons[1]) {
+                    socialIcons[1].src = newConfig.icons.roblox;
+                }
+                if (newConfig.icons.server && socialIcons[2]) {
+                    socialIcons[2].src = newConfig.icons.server;
+                }
+            }
+        }
+
+        // Adicionar efeitos de entrada escalonados
+        window.addEventListener('load', function() {
+            const elements = ['.avatar', '.name', '.description', '.social-links'];
+            
+            elements.forEach((selector, index) => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.style.animation = `fadeInUp 0.8s ease-out ${index * 0.2}s forwards`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
